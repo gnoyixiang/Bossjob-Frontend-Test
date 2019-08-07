@@ -1,0 +1,46 @@
+.SearchPanel {
+    padding: 32px 20px;
+    background: #F8F9FA;
+    box-shadow: 0 5px 5px -1px #efefef;
+}
+
+.Searchbar {
+    display: flex;
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.Searchbar i {
+    color: #2379ea;
+}
+
+.Searchbar > input {
+    flex-grow: 1;
+    border: 0;
+    outline: none;
+    margin-left: 8px;
+    font-size: 0.9em;
+    background: transparent;
+    color:#7A7B7C;
+    font-weight: bold;
+}
+
+.FilterButton {
+    width: 100%;
+    font-size: 1em;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 1eml
+    border-radius: calc(0.5em + 8px);
+    color: #2379ea;
+    border-color: #2379ea;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    background: transparent;
+}
+
+.FilterButton:focus {
+    box-shadow: 0 0 0 0.2rem #2379ea40;
+}

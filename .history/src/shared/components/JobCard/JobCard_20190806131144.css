@@ -1,0 +1,17 @@
+.JobCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.JobCard > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.JobCard > div > div:first-child {
+    text-align: left;
+}
+
+.JobCard > div > div:last-child {
+    text-align: right;
+}

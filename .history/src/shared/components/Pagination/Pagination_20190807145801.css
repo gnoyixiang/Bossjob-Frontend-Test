@@ -1,0 +1,13 @@
+.Pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Pagination-noresults {
+    justify-self: center;
+}
+
+.Pagination-page.Pagination-active {
+    color: #2379ea;
+}

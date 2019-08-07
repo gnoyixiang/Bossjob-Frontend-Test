@@ -1,0 +1,32 @@
+.SearchPanel {
+    padding: 34px 20px;
+    background: #F8F9FA;
+}
+
+.Searchbar {
+    display: flex;
+    padding-bottom: 24px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.Searchbar > input {
+    flex-grow: 1;
+    border: 0;
+    outline: none;
+    margin-left: 8px;
+    font-size: 1em;
+    background: transparent;
+}
+
+.FilterButton {
+    display: flex;
+    width: 100%;
+    font-size: 1em;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    border-radius: 17px;
+    color: #2379ea;
+    border-color: #2379ea;
+}

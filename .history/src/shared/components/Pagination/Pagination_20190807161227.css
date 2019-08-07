@@ -1,0 +1,27 @@
+.Pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.ShowResults {
+  border-bottom: 2px solid #d8d8d8;
+}
+
+.Pagination > span {
+  cursor: pointer;
+}
+
+.Pagination > span:hover {
+  color: #2379ea;
+}
+
+.Page[active="active"] {
+  color: #2379ea;
+}
+
+.Navigator[disabled] {
+  color: #d8d8d8 !important;
+  cursor: not-allowed;
+}
