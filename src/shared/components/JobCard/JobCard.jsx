@@ -29,7 +29,8 @@ const JobCard = props => {
     return (
         <div className={classnames(className, 'JobCard')} {...restProps}>
             <div className="JobHeader">
-                <div className="JobTitle">{job_title}</div>
+                {/* <div className="JobTitle">{job_title}</div> */}
+                <div className="JobTitle" dangerouslySetInnerHTML={{__html: job_title}} />
                 <div className="Salary">
                     {formatCurrency(salary_range_from, job_country)} - {formatCurrency(salary_range_to, job_country)}
                 </div>

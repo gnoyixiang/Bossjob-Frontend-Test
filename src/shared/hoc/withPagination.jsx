@@ -21,14 +21,15 @@ const withPagination = (WrappedComponent, options = {}) => class WithPagination 
      * @param {number} total
      */
     setPagination = (pagination, onPaginationChange) => {
-        const total = pagination.total || this.state.total;
-        const size = pagination.size || this.state.size;
-        let page = pagination.page || this.state.page;
+        const total = pagination.total !== undefined ? pagination.total : this.state.total;
+        const size = pagination.size !== undefined ? pagination.size : this.state.size;
+        let page = pagination.page !== undefined ? pagination.page : this.state.page;
         if (page < 1) {
             page = 1;
-        } else if (page > Math.ceil(total / size)) {
+        } else if (total && page > Math.ceil(total / size)) {
             page = Math.ceil(total / size);
         }
+        console.log('[setPagination]', pagination, total, size, page);
         this.setState({
             page,
             size,
