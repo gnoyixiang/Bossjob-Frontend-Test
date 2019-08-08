@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const updateJobs = (state, payload) => {
-    console.log('updateJobs', state, payload);
+    console.log('updateJobs', {state, payload});
     const { jobs } = payload,
         updatedData = {
             ...state.data,
@@ -25,7 +25,7 @@ const updateJobs = (state, payload) => {
 };
 
 const updateSearch = (state, payload) => {
-    console.log('updateSearch', state, payload);
+    console.log('updateSearch', {state, payload});
     const { search } = payload;
     return {
         ...state,
@@ -36,7 +36,7 @@ const updateSearch = (state, payload) => {
 };
 
 const setSearchStatus = (state, payload) => {
-    console.log('setSearchStatus', state, payload);
+    console.log('setSearchStatus', {state, payload});
     const { searchStatus } = payload;
     const updatedStatus = {
         ...state.searchStatus,

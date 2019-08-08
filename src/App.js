@@ -54,7 +54,7 @@ class App extends Component {
     }
 
     onPageChange = page => {
-        console.log('onPageChange', page);
+        console.log('onPageChange', {page});
         this.props.setPagination({ page });
     }
 

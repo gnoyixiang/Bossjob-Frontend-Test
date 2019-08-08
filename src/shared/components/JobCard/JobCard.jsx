@@ -24,8 +24,7 @@ const JobCard = props => {
     const {
         job_title, salary_range_from, salary_range_to, job_location, job_country, company_name, xp_lvl, job_type, degree, company_logo, refreshed_at
     } = job;
-
-    console.log(refreshed_at);
+    
     return (
         <div className={classnames(className, 'JobCard')} {...restProps}>
             <div className="JobHeader">

@@ -16,7 +16,7 @@ export const searchJobs = (options) => {
         return api.searchJobs(options)
             .then(response => {
                 const { config, request, data: responseData } = response;
-                console.log('searchJobs response', response, config, request, responseData);
+                console.log('searchJobs', {response, config, request, responseData});
                 if (request.status !== 200) {
                     dispatch(jobsActions.setSearchStatus({
                         searching: false,
@@ -36,7 +36,7 @@ export const searchJobs = (options) => {
                 dispatch(jobsActions.setSearchStatus({ searching: false, error: false }));
             })
             .catch(error => {
-                console.log('searchJobs error', error);
+                console.warn('searchJobs', {error});
                 dispatch(jobsActions.setSearchStatus({ searching: false, error: true }));
             });
     };

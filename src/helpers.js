@@ -3,12 +3,23 @@ import countryList from 'country-list'
 
 export const classnames = (...classNames) => classNames.join(' ').trim();
 
-export const formatCurrency = (currency, country = '') => {
-    const locale = window.navigator.language.split('-')[0] + '-' + (countryList.getCode(country) || window.navigator.language.split('-')[1]);
-    const countryName = currencyCodes.countries().find(name => name.toLowerCase().indexOf(country.toLowerCase()) >= 0) || '';
-    const currencyCode = currencyCodes.country(countryName);
+window.currencyCodes = currencyCodes;
+window.countryList = countryList;
 
-    const intlNumberFormatParams = [
+export const formatCurrency = (value, currencyCode) => {
+    let simplifiedValue, suffix;
+    const locale = window.navigator.language;
+    // console.log('[formatCurrency]', value, locale, currencyCode);
+
+    if (value > 1000000) {
+        simplifiedValue = Math.floor(value / 1000000);
+        suffix = 'M'
+    } else if (value > 1000) {
+        simplifiedValue = Math.floor(value / 1000);
+        suffix = 'K'
+    }
+
+    return (currencyCode ? Intl.NumberFormat(
         locale,
         {
             style: 'currency',
@@ -16,20 +27,7 @@ export const formatCurrency = (currency, country = '') => {
             currencyDisplay: 'symbol',
             minimumFractionDigits: 0,
         }
-    ]
-
-    let simplifiedCurrency, suffix;
-
-    if (currency > 1000000) {
-        simplifiedCurrency = Math.floor(currency / 1000000);
-        suffix = 'M'
-    } else if (currency > 1000) {
-        simplifiedCurrency = Math.floor(currency / 1000);
-        suffix = 'K'
-    }
-
-    const formatted = Intl.NumberFormat(...intlNumberFormatParams).format(simplifiedCurrency) + suffix
-    return formatted;
+    ).format(simplifiedValue) : `$${simplifiedValue}`) + suffix
 }
 
 export const displayDateDifference = (date, now = new Date()) => {
@@ -57,7 +55,7 @@ export const displayDateDifference = (date, now = new Date()) => {
     let diffInHours = Math.floor(differenceInMS / msPerHour);
     let diffInMins = Math.floor(differenceInMS / msPerMinute);
     let diffInSecs = Math.floor(differenceInMS / msPerSecond);
-    console.log(diffInWeeks, diffInDays, diffInHours, diffInMins);
+    console.log('[displayDateDifference]', { date, now, diffInWeeks, diffInDays, diffInHours, diffInMins });
     if (diffInWeeks) {
         return `${diffInWeeks} ${isPlural(diffInWeeks, 'week')} ago`;
     }

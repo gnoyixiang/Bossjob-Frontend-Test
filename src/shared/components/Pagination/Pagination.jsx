@@ -48,12 +48,12 @@ const Paging = ({ page, numberOfPages, pageRangeDisplayed, pageMarginDisplayed, 
             return pages;
         }, []);
 
-    console.log(page, numberOfPages, startMarginPages, rangePages, endMarginPages, displayedPages);
+    console.log('[Paging]', {page, numberOfPages, startMarginPages, rangePages, endMarginPages, displayedPages});
 
     const hasPreviousPage = page > 1;
     const hasNextPage = page < numberOfPages;
     let ellipsisOnClickHandler = index => {
-        console.log(index, pageMarginDisplayed, displayedPages);
+        console.log('[ellipsisOnClickHandler]', {index, pageMarginDisplayed, displayedPages});
         if(index === pageMarginDisplayed) {
             // case 1: 1 ... 7 8 9 10 11, clicking on this ellipsis is going to 7 - 1
             return onPageChange(displayedPages[index + 1] - 1);
