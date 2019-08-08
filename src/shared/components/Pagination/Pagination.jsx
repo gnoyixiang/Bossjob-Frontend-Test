@@ -106,8 +106,8 @@ const Paging = ({ page, numberOfPages, pageRangeDisplayed, pageMarginDisplayed, 
 };
 
 Paging.defaultProps = {
-    pageRangeDisplayed: 3,
-    pageMarginDisplayed: 3,
+    pageRangeDisplayed: 5,
+    pageMarginDisplayed: 1,
 };
 
 // props has page, size, total_count, total_pages
