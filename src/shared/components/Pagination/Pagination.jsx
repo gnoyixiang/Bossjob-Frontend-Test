@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { classnames } from '../../../helpers';
 import './Pagination.css';
+
+const ELLIPSIS = 'ELLIPSIS';
 
 const ShowResults = ({ total }) => (
     <p className="ShowResults">{total} jobs found</p>
@@ -26,18 +27,42 @@ const Paging = ({ page, numberOfPages, pageRangeDisplayed, pageMarginDisplayed, 
     } else {
         rangePages = Array(pageRangeDisplayed).fill().map((_, index) => page - Math.floor(pageRangeDisplayed / 2) + index)
     }
-
-    const displayedPages = startMarginPages.concat(rangePages, endMarginPages)
-        .sort((a, b) => a - b)
+    let displayedPages = startMarginPages.concat(rangePages, endMarginPages)
+        // remove out of range
+        .filter(pageNum => pageNum <= numberOfPages && pageNum > 0)
+        // remove duplicates
         .reduce((pages, pageNum) => {
-            if (pages[pages.length - 1] !== pageNum) {
+            if (pages.indexOf(pageNum) < 0) {
                 pages.push(pageNum);
             }
             return pages;
+        }, [])
+        .sort((a, b) => a - b)
+        // insert ellipsis
+        .reduce((pages, pageNum) => {
+            const prevPageNum = pages[pages.length - 1];
+            if (prevPageNum < pageNum - 1) {
+                pages.push(ELLIPSIS);
+            }
+            pages.push(pageNum);
+            return pages;
         }, []);
+
+    console.log(page, numberOfPages, startMarginPages, rangePages, endMarginPages, displayedPages);
 
     const hasPreviousPage = page > 1;
     const hasNextPage = page < numberOfPages;
+    let ellipsisOnClickHandler = index => {
+        console.log(index, pageMarginDisplayed, displayedPages);
+        if(index === pageMarginDisplayed) {
+            // case 1: 1 ... 7 8 9 10 11, clicking on this ellipsis is going to 7 - 1
+            return onPageChange(displayedPages[index + 1] - 1);
+        }
+        if(index === displayedPages.length - pageMarginDisplayed - 1) {
+            // case 2: 7 8 9 10 11 ... 200, clicking on this ellipsis is going to 11 + 1
+            return onPageChange(displayedPages[index - 1] + 1);
+        }
+    }
 
     return (
         <div className="Pagination">
@@ -49,22 +74,24 @@ const Paging = ({ page, numberOfPages, pageRangeDisplayed, pageMarginDisplayed, 
                 {'<'}
             </span>
             {displayedPages.map((pageNum, index) => (
-                <React.Fragment key={pageNum}>
-                    {pageNum > displayedPages[index - 1] + 1 ? (
+                <React.Fragment key={`${pageNum}_${index}`}>
+                    {pageNum === ELLIPSIS ? (
                         <span
                             className="Ellipsis"
-                            onClick={() => onPageChange(displayedPages[index - 1] + 1)}
+                            onClick={() => ellipsisOnClickHandler(index)}
                         >
                             ...
                         </span>
-                    ) : null}
-                    <span
-                        className="Page"
-                        active={page === pageNum ? "active" : undefined}
-                        onClick={() => onPageChange(pageNum)}
-                    >
-                        {pageNum}
-                    </span>
+                    ) : (
+                            <span
+                                className="Page"
+                                active={page === pageNum ? "active" : undefined}
+                                onClick={() => onPageChange(pageNum)}
+                            >
+                                {pageNum}
+                            </span>
+                        )
+                    }
                 </React.Fragment>
             ))}
             <span
@@ -79,8 +106,8 @@ const Paging = ({ page, numberOfPages, pageRangeDisplayed, pageMarginDisplayed, 
 };
 
 Paging.defaultProps = {
-    pageRangeDisplayed: 5,
-    pageMarginDisplayed: 1,
+    pageRangeDisplayed: 3,
+    pageMarginDisplayed: 3,
 };
 
 // props has page, size, total_count, total_pages

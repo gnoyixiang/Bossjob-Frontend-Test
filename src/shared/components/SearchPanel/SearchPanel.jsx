@@ -6,7 +6,9 @@ const SearchPanel = props => {
     const { searchInput, onSearchInputChange, onSearch, className, ...restProps } = props;
 
     const onEnter = (evt) => {
-        if(evt.key === 'Enter' && evt.target.value) {
+        if(evt.key === 'Enter' 
+        // && evt.target.value
+        ) {
             onSearch();
         }
     }
