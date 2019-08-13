@@ -13,19 +13,20 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
+        this.lastQuery = '';
         this.state = {
-            searchString: '',
+            searchString: this.lastQuery,
             jobs: [],
         };
     }
 
     componentDidMount() {
-        this.handleSearch();
+        this.retrieveJobs();
     }
 
     componentDidUpdate(prevProps) {
-        const { search, pagination } = this.props,
-            { search: prevSearch, pagination: prevPagination } = prevProps;
+        const { search } = this.props,
+            { search: prevSearch } = prevProps;
         if (search.page !== prevSearch.page || search.total_num !== prevSearch.total_num || search.size !== prevSearch.size) {
             this.props.setPagination({
                 page: search.page,
@@ -33,29 +34,29 @@ class App extends Component {
                 size: search.size
             });
         }
-        if (pagination.page !== prevPagination.page || pagination.total_num !== prevPagination.total_num || pagination.size !== prevPagination.size) {
-            this.handleSearch();
-        }
     }
 
     updateSearchString = evt => {
         this.setState({ searchString: evt.target.value });
     }
 
-    handleSearch = () => {
-        const { pagination } = this.props,
-            { searchString } = this.state;
+    retrieveJobs = (options = {}) => {
+        const { pagination } = this.props;
         this.props.searchJobs({
-            size: pagination.size,
-            query: searchString,
-            page: pagination.page
+            size: options.size || pagination.size,
+            query: this.lastQuery,
+            page: options.page || pagination.page
         });
         window.scrollTo({ top: 0 });
     }
 
+    handleSearch = () => {
+        this.lastQuery = this.state.searchString;
+        this.retrieveJobs({ page: 1 });
+    }
+
     onPageChange = page => {
-        console.log('onPageChange', {page});
-        this.props.setPagination({ page });
+        this.retrieveJobs({ page });
     }
 
     render() {
